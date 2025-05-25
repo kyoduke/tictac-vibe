@@ -1,126 +1,5 @@
 import React, { useEffect } from 'react';
-import styled from 'styled-components';
 import { motion, AnimatePresence } from 'framer-motion';
-
-const ModalOverlay = styled(motion.div)`
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background-color: rgba(0, 0, 0, 0.6);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  z-index: 100;
-  backdrop-filter: blur(5px);
-`;
-
-const ModalContent = styled(motion.div)`
-  background-color: var(--white);
-  border-radius: var(--border-radius);
-  padding: 2rem;
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
-  text-align: center;
-  max-width: 90%;
-  width: 400px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-`;
-
-const ModalTitle = styled(motion.h2)`
-  color: var(--primary-color);
-  margin-bottom: 1rem;
-  font-size: 1.8rem;
-`;
-
-const WinnerDisplay = styled(motion.div)`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  margin-bottom: 2rem;
-`;
-
-const WinnerSymbol = styled(motion.div)`
-  font-size: 4rem;
-  font-weight: bold;
-  margin: 1rem 0;
-  color: ${props => 
-    props.winner === 'X' 
-      ? 'var(--primary-color)' 
-      : props.winner === 'O' 
-        ? 'var(--secondary-color)' 
-        : 'var(--text-color)'
-  };
-`;
-
-const WinnerText = styled(motion.p)`
-  font-size: 1.2rem;
-  color: var(--text-color);
-  margin-bottom: 1rem;
-`;
-
-const AIDifficultyText = styled(motion.p)`
-  font-size: 0.9rem;
-  color: var(--primary-dark);
-  margin-bottom: 1rem;
-  padding: 0.3rem 0.6rem;
-  background-color: rgba(76, 175, 80, 0.1);
-  border-radius: var(--border-radius);
-  text-transform: capitalize;
-  display: inline-block;
-`;
-
-const ButtonsContainer = styled.div`
-  display: flex;
-  gap: 1rem;
-  margin-top: 1rem;
-`;
-
-const Button = styled(motion.button)`
-  padding: 0.75rem 1.5rem;
-  border-radius: var(--border-radius);
-  font-weight: 500;
-  font-size: 1rem;
-  cursor: pointer;
-  transition: all 0.2s ease;
-`;
-
-const PrimaryButton = styled(Button)`
-  background-color: var(--primary-color);
-  color: var(--white);
-  border: none;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  
-  &:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
-  }
-  
-  &:active {
-    transform: translateY(0);
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  }
-`;
-
-const SecondaryButton = styled(Button)`
-  background-color: transparent;
-  color: var(--primary-dark);
-  border: 2px solid var(--primary-color);
-  
-  &:hover {
-    background-color: rgba(76, 175, 80, 0.1);
-  }
-`;
-
-const Confetti = styled(motion.div)`
-  position: absolute;
-  width: 10px;
-  height: 10px;
-  border-radius: 50%;
-  background-color: ${props => props.color};
-`;
 
 const WinnerModal = ({ winner, onClose, onPlayAgain, gameMode, aiDifficulty }) => {
   useEffect(() => {
@@ -211,13 +90,25 @@ const WinnerModal = ({ winner, onClose, onPlayAgain, gameMode, aiDifficulty }) =
     }
   };
 
+  // Get color for winner symbol
+  const getWinnerColor = () => {
+    if (winner === 'X') return 'text-primary';
+    if (winner === 'O') return 'text-secondary';
+    return 'text-text';
+  };
+
   // Generate random confetti for winner celebration
   const confetti = Array.from({ length: 50 }).map((_, i) => {
     const colors = ['#4CAF50', '#A5D6A7', '#FFC107', '#81C784', '#FFD54F'];
     return (
-      <Confetti
+      <motion.div
         key={i}
-        color={colors[Math.floor(Math.random() * colors.length)]}
+        className="absolute w-2.5 h-2.5 rounded-full"
+        style={{
+          backgroundColor: colors[Math.floor(Math.random() * colors.length)],
+          top: '50%',
+          left: '50%'
+        }}
         initial={{
           x: 0,
           y: 0,
@@ -233,17 +124,14 @@ const WinnerModal = ({ winner, onClose, onPlayAgain, gameMode, aiDifficulty }) =
           duration: Math.random() * 2 + 1,
           ease: "easeOut"
         }}
-        style={{
-          top: '50%',
-          left: '50%'
-        }}
       />
     );
   });
 
   return (
     <AnimatePresence>
-      <ModalOverlay
+      <motion.div
+        className="fixed inset-0 bg-black/60 flex items-center justify-center z-50 backdrop-blur-sm"
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         exit={{ opacity: 0 }}
@@ -251,61 +139,66 @@ const WinnerModal = ({ winner, onClose, onPlayAgain, gameMode, aiDifficulty }) =
       >
         {winner !== 'tie' && confetti}
         
-        <ModalContent
+        <motion.div
+          className="bg-white rounded-game p-8 shadow-xl text-center max-w-[90%] w-[400px] flex flex-col items-center"
           variants={modalVariants}
           initial="hidden"
           animate="visible"
           exit="exit"
           onClick={e => e.stopPropagation()}
         >
-          <ModalTitle
+          <motion.h2
+            className="text-primary text-3xl mb-4"
             variants={titleVariants}
             initial="hidden"
             animate="visible"
           >
             Game Over
-          </ModalTitle>
+          </motion.h2>
           
-          <WinnerDisplay>
+          <div className="flex flex-col items-center mb-8">
             {winner !== 'tie' ? (
-              <WinnerSymbol 
-                winner={winner}
+              <motion.div 
+                className={`text-6xl font-bold my-4 ${getWinnerColor()}`}
                 variants={symbolVariants}
                 initial="hidden"
                 animate="visible"
               >
                 {winner}
-              </WinnerSymbol>
+              </motion.div>
             ) : (
-              <WinnerSymbol 
-                winner={winner}
+              <motion.div 
+                className="text-6xl font-bold my-4 text-text"
                 variants={symbolVariants}
                 initial="hidden"
                 animate="visible"
               >
                 =
-              </WinnerSymbol>
+              </motion.div>
             )}
             
-            <WinnerText
+            <motion.p
+              className="text-xl text-text mb-4"
               initial={{ opacity: 0 }}
               animate={{ opacity: 1, transition: { delay: 0.4 } }}
             >
               {getWinnerMessage()}
-            </WinnerText>
+            </motion.p>
             
             {gameMode === 'ai' && (winner === 'O' || winner === 'tie') && (
-              <AIDifficultyText
+              <motion.p
+                className="text-sm text-primary-dark mb-4 py-1.5 px-3 bg-primary/10 rounded-game capitalize inline-block"
                 initial={{ opacity: 0, y: 10 }}
                 animate={{ opacity: 1, y: 0, transition: { delay: 0.5 } }}
               >
                 AI Difficulty: {aiDifficulty}
-              </AIDifficultyText>
+              </motion.p>
             )}
-          </WinnerDisplay>
+          </div>
           
-          <ButtonsContainer>
-            <PrimaryButton
+          <div className="flex gap-4 mt-4">
+            <motion.button
+              className="py-3 px-6 rounded-game font-medium text-base bg-primary text-white border-none shadow-sm hover:-translate-y-0.5 hover:shadow-md active:translate-y-0 active:shadow-sm"
               variants={buttonVariants}
               initial="hidden"
               animate="visible"
@@ -314,9 +207,10 @@ const WinnerModal = ({ winner, onClose, onPlayAgain, gameMode, aiDifficulty }) =
               onClick={onPlayAgain}
             >
               Play Again
-            </PrimaryButton>
+            </motion.button>
             
-            <SecondaryButton
+            <motion.button
+              className="py-3 px-6 rounded-game font-medium text-base bg-transparent text-primary-dark border-2 border-primary hover:bg-primary/10"
               variants={buttonVariants}
               initial="hidden"
               animate="visible"
@@ -325,10 +219,10 @@ const WinnerModal = ({ winner, onClose, onPlayAgain, gameMode, aiDifficulty }) =
               onClick={onClose}
             >
               Close
-            </SecondaryButton>
-          </ButtonsContainer>
-        </ModalContent>
-      </ModalOverlay>
+            </motion.button>
+          </div>
+        </motion.div>
+      </motion.div>
     </AnimatePresence>
   );
 };

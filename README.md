@@ -1,6 +1,6 @@
 # Animated Tic Tac Toe
 
-A React-based Tic Tac Toe game with smooth animations and a green-themed UI.
+A React-based Tic Tac Toe game with smooth animations and a green-themed UI, styled with Tailwind CSS.
 
 ![Tic Tac Toe Game](https://i.imgur.com/example.png)
 
@@ -16,7 +16,7 @@ A React-based Tic Tac Toe game with smooth animations and a green-themed UI.
 ## Technologies Used
 
 - React
-- Styled Components
+- Tailwind CSS (v3.4.17)
 - Framer Motion for animations
 
 ## Getting Started
@@ -26,7 +26,7 @@ A React-based Tic Tac Toe game with smooth animations and a green-themed UI.
 - Node.js (v14.0.0 or later)
 - npm or yarn
 
-### Installation
+## Installation
 
 1. Clone the repository or download the source code
 
@@ -52,6 +52,8 @@ or
 ```
 yarn start
 ```
+
+The project uses Tailwind CSS for styling, which is already configured and ready to use.
 
 5. Open your browser and go to [http://localhost:3000](http://localhost:3000)
 

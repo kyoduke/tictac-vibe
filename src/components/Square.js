@@ -1,82 +1,7 @@
 import React from 'react';
-import styled from 'styled-components';
 import { motion } from 'framer-motion';
 
-const SquareButton = styled(motion.button)`
-  width: var(--cell-size);
-  height: var(--cell-size);
-  background-color: var(--white);
-  border: none;
-  border-radius: var(--border-radius);
-  font-size: 2.5rem;
-  font-weight: bold;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  color: ${props => 
-    props.value === 'X' 
-      ? 'var(--primary-color)' 
-      : props.value === 'O' 
-        ? 'var(--secondary-color)' 
-        : 'transparent'
-  };
-  transition: transform 0.2s, box-shadow 0.2s;
-
-  &:hover {
-    transform: ${props => props.value ? 'scale(1.02)' : 'scale(1.05)'};
-    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
-  }
-
-  &:active {
-    transform: scale(0.98);
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  }
-
-  ${props => props.isWinningSquare && `
-    background-color: var(--primary-light);
-    animation: winner-pulse 1.5s infinite;
-  `}
-`;
-
-const X = styled(motion.span)`
-  position: relative;
-  display: inline-block;
-  width: 60%;
-  height: 60%;
-`;
-
-const XLine1 = styled(motion.div)`
-  position: absolute;
-  top: 50%;
-  left: 0;
-  width: 100%;
-  height: 10px;
-  background-color: var(--primary-color);
-  border-radius: 5px;
-  transform: translateY(-50%) rotate(45deg);
-`;
-
-const XLine2 = styled(motion.div)`
-  position: absolute;
-  top: 50%;
-  left: 0;
-  width: 100%;
-  height: 10px;
-  background-color: var(--primary-color);
-  border-radius: 5px;
-  transform: translateY(-50%) rotate(-45deg);
-`;
-
-const O = styled(motion.div)`
-  width: 60%;
-  height: 60%;
-  border: 10px solid var(--secondary-color);
-  border-radius: 50%;
-`;
-
-const Square = ({ value, onClick, isWinningSquare, index }) => {
+const Square = ({ value, onClick, isWinningSquare, index, disabled }) => {
   const variants = {
     hidden: { 
       scale: 0, 
@@ -119,11 +44,25 @@ const Square = ({ value, onClick, isWinningSquare, index }) => {
     }
   };
 
+  // Define color based on value
+  const textColor = value === 'X' 
+    ? 'text-primary' 
+    : value === 'O' 
+      ? 'text-secondary' 
+      : 'text-transparent';
+
+  // Define background based on winning state
+  const bgColor = isWinningSquare ? 'bg-primary-light animate-winner-pulse' : 'bg-white';
+  
+  // Define cursor style based on disabled state
+  const cursorStyle = disabled ? 'cursor-not-allowed' : 'cursor-pointer';
+  // Define opacity based on disabled state
+  const opacity = disabled && !value ? 'opacity-70' : 'opacity-100';
+
   return (
-    <SquareButton 
-      onClick={onClick} 
-      value={value}
-      isWinningSquare={isWinningSquare}
+    <motion.button 
+      onClick={disabled ? null : onClick}
+      className={`w-[100px] h-[100px] ${bgColor} border-none rounded-game text-4xl font-bold ${cursorStyle} flex items-center justify-center shadow-md ${textColor} transition-all duration-200 ${opacity}`}
       variants={variants}
       initial="hidden"
       animate="visible"
@@ -131,29 +70,37 @@ const Square = ({ value, onClick, isWinningSquare, index }) => {
       whileTap={{ scale: 0.98 }}
     >
       {value === 'X' && (
-        <X>
-          <XLine1 
+        <span className="relative inline-block w-3/5 h-3/5">
+          <motion.div 
+            className="absolute top-1/2 left-0 w-full h-2.5 bg-primary rounded-sm transform -translate-y-1/2 rotate-45"
             variants={xLineVariants}
             initial="hidden"
             animate="visible"
           />
-          <XLine2 
+          <motion.div 
+            className="absolute top-1/2 left-0 w-full h-2.5 bg-primary rounded-sm transform -translate-y-1/2 -rotate-45"
             variants={xLineVariants}
             initial="hidden"
             animate="visible"
           />
-        </X>
+        </span>
       )}
       
       {value === 'O' && (
-        <O 
+        <motion.div 
+          className="w-3/5 h-3/5 border-[10px] border-secondary rounded-full"
           variants={oVariants}
           initial="hidden"
           animate="visible"
         />
       )}
-    </SquareButton>
+    </motion.button>
   );
 };
 
 export default Square;
+
+// Set default props
+Square.defaultProps = {
+  disabled: false
+};

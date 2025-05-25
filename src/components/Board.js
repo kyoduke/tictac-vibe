@@ -1,31 +1,8 @@
 import React from 'react';
-import styled from 'styled-components';
 import { motion } from 'framer-motion';
 import Square from './Square';
 
-const BoardContainer = styled.div`
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  grid-gap: 10px;
-  margin: 30px 0;
-  position: relative;
-  background-color: var(--primary-light);
-  padding: 10px;
-  border-radius: var(--border-radius);
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-`;
-
-const WinLine = styled(motion.div)`
-  position: absolute;
-  background-color: var(--secondary-color);
-  z-index: 1;
-  transform-origin: left center;
-  height: 8px;
-  border-radius: 4px;
-  box-shadow: 0 2px 10px rgba(255, 193, 7, 0.5);
-`;
-
-const Board = ({ squares, onClick, winningLine }) => {
+const Board = ({ squares, onClick, winningLine, disabled }) => {
   // Functions to calculate win line dimensions
   const getWinLineStyles = () => {
     if (!winningLine || winningLine.length === 0) return {};
@@ -92,23 +69,28 @@ const Board = ({ squares, onClick, winningLine }) => {
         onClick={() => onClick(i)}
         isWinningSquare={winningLine && winningLine.includes(i)}
         index={i}
+        disabled={disabled}
       />
     );
   };
 
   return (
-    <BoardContainer>
+    <div className="grid grid-cols-3 gap-2.5 my-8 relative bg-primary-light p-2.5 rounded-game shadow-md">
       {winningLine && winningLine.length > 0 && (
-        <WinLine
+        <motion.div
+          className="absolute bg-secondary z-10 h-2 rounded origin-left"
+          style={{
+            boxShadow: '0 2px 10px rgba(255, 193, 7, 0.5)',
+            ...getWinLineStyles()
+          }}
           initial={{ scaleX: 0, opacity: 0 }}
           animate={{ scaleX: 1, opacity: 1 }}
           transition={{ delay: 0.2, duration: 0.5 }}
-          style={getWinLineStyles()}
         />
       )}
       
       {Array(9).fill(null).map((_, i) => renderSquare(i))}
-    </BoardContainer>
+    </div>
   );
 };
 
