@@ -1,0 +1,7 @@
+services:
+  tictactoe:
+    build:
+      context: ./tictactoe
+      dockerfile: ./docker/Dockerfile
+    ports:
+      - "8000:80"

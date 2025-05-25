@@ -1,0 +1,3 @@
+# Docker Ignore For node React project
+node_modules/
+dist/
