@@ -62,7 +62,7 @@ const Square = ({ value, onClick, isWinningSquare, index, disabled }) => {
   return (
     <motion.button 
       onClick={disabled ? null : onClick}
-      className={`w-[100px] h-[100px] ${bgColor} border-none rounded-game text-4xl font-bold ${cursorStyle} flex items-center justify-center shadow-md ${textColor} transition-all duration-200 ${opacity}`}
+      className={`w-[70px] h-[70px] sm:w-[85px] sm:h-[85px] md:w-[100px] md:h-[100px] ${bgColor} border-none rounded-game text-2xl sm:text-3xl md:text-4xl font-bold ${cursorStyle} flex items-center justify-center shadow-md ${textColor} transition-all duration-200 ${opacity}`}
       variants={variants}
       initial="hidden"
       animate="visible"
@@ -70,15 +70,15 @@ const Square = ({ value, onClick, isWinningSquare, index, disabled }) => {
       whileTap={{ scale: 0.98 }}
     >
       {value === 'X' && (
-        <span className="relative inline-block w-3/5 h-3/5">
+        <span className="relative inline-block w-1/2 sm:w-3/5 h-1/2 sm:h-3/5">
           <motion.div 
-            className="absolute top-1/2 left-0 w-full h-2.5 bg-primary rounded-sm transform -translate-y-1/2 rotate-45"
+            className="absolute top-1/2 left-0 w-full h-1.5 sm:h-2 md:h-2.5 bg-primary rounded-sm transform -translate-y-1/2 rotate-45"
             variants={xLineVariants}
             initial="hidden"
             animate="visible"
           />
           <motion.div 
-            className="absolute top-1/2 left-0 w-full h-2.5 bg-primary rounded-sm transform -translate-y-1/2 -rotate-45"
+            className="absolute top-1/2 left-0 w-full h-1.5 sm:h-2 md:h-2.5 bg-primary rounded-sm transform -translate-y-1/2 -rotate-45"
             variants={xLineVariants}
             initial="hidden"
             animate="visible"
@@ -88,7 +88,7 @@ const Square = ({ value, onClick, isWinningSquare, index, disabled }) => {
       
       {value === 'O' && (
         <motion.div 
-          className="w-3/5 h-3/5 border-[10px] border-secondary rounded-full"
+          className="w-1/2 sm:w-3/5 h-1/2 sm:h-3/5 border-[6px] sm:border-[8px] md:border-[10px] border-secondary rounded-full"
           variants={oVariants}
           initial="hidden"
           animate="visible"

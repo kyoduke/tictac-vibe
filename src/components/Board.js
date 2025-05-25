@@ -75,10 +75,10 @@ const Board = ({ squares, onClick, winningLine, disabled }) => {
   };
 
   return (
-    <div className="grid grid-cols-3 gap-2.5 my-8 relative bg-primary-light p-2.5 rounded-game shadow-md">
+    <div className="grid grid-cols-3 gap-1.5 sm:gap-2 md:gap-2.5 my-4 sm:my-6 md:my-8 relative bg-primary-light p-1.5 sm:p-2 md:p-2.5 rounded-game shadow-md">
       {winningLine && winningLine.length > 0 && (
         <motion.div
-          className="absolute bg-secondary z-10 h-2 rounded origin-left"
+          className="absolute bg-secondary z-10 h-1.5 sm:h-2 rounded origin-left"
           style={{
             boxShadow: '0 2px 10px rgba(255, 193, 7, 0.5)',
             ...getWinLineStyles()
