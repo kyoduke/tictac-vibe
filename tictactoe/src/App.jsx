@@ -298,21 +298,21 @@ function App() {
   };
 
   return (
-    <motion.div 
+    <motion.div
       className="flex flex-col items-center justify-center min-h-screen p-4 sm:p-6 md:p-8 gap-4 sm:gap-6 md:gap-8 bg-background"
-      initial={{ opacity: 0 }} 
-      animate={{ opacity: 1 }} 
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
       transition={{ duration: 0.5 }}
     >
       <h1 className="text-primary text-3xl sm:text-4xl md:text-5xl text-center mb-2 sm:mb-4 font-sans font-bold">
-        Tic Tac Toe
+        Tic Tac Vibe
       </h1>
 
-      <motion.div 
+      <motion.div
         className="flex flex-col items-center bg-white p-4 sm:p-6 md:p-8 rounded-xl shadow-lg w-[95vw] sm:w-[90vw] md:max-w-[550px]"
-        initial={{ scale: 0.9, opacity: 0 }} 
-        animate={{ scale: 1, opacity: 1 }} 
-        transition={{ delay: 0.3, type: 'spring' }}
+        initial={{ scale: 0.9, opacity: 0 }}
+        animate={{ scale: 1, opacity: 1 }}
+        transition={{ delay: 0.3, type: "spring" }}
       >
         <ScoreBoard
           scores={scores}
@@ -353,10 +353,9 @@ function App() {
       </AnimatePresence>
 
       <footer className="mt-4 sm:mt-6 md:mt-8 text-center text-text text-xs sm:text-sm">
-        <p>© {new Date().getFullYear()} Animated Tic Tac Toe</p>
+        <p>© {new Date().getFullYear()} Tic Tac Vibe</p>
       </footer>
     </motion.div>
   );
 }
-
 export default App;

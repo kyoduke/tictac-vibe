@@ -1,4 +1,4 @@
-# Animated Tic Tac Toe
+# Tic Tac Vibe
 
 A React-based Tic Tac Toe game with smooth animations and a green-themed UI, styled with Tailwind CSS.
 
@@ -32,7 +32,7 @@ A React-based Tic Tac Toe game with smooth animations and a green-themed UI, sty
 
 2. Navigate to the project directory:
 ```
-cd tic-tac-toe-animated
+cd tictactoe
 ```
 
 3. Install dependencies:
