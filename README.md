@@ -97,7 +97,7 @@ src/
 
 ## License
 
-MIT
+GPL-3.0
 
 ## Acknowledgments
 
