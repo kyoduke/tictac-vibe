@@ -1,7 +1,7 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 
-const Square = ({ value, onClick, isWinningSquare, index, disabled }) => {
+const Square = ({ value, onClick, isWinningSquare, index, disabled, className }) => {
   const variants = {
     hidden: { 
       scale: 0, 
@@ -62,7 +62,7 @@ const Square = ({ value, onClick, isWinningSquare, index, disabled }) => {
   return (
     <motion.button 
       onClick={disabled ? null : onClick}
-      className={`w-[70px] h-[70px] sm:w-[85px] sm:h-[85px] md:w-[100px] md:h-[100px] ${bgColor} border-none rounded-game text-2xl sm:text-3xl md:text-4xl font-bold ${cursorStyle} flex items-center justify-center shadow-md ${textColor} transition-all duration-200 ${opacity}`}
+      className={`w-[70px] h-[70px] sm:w-[85px] sm:h-[85px] md:w-[100px] md:h-[100px] ${bgColor} border-none rounded-game text-2xl sm:text-3xl md:text-4xl font-bold ${cursorStyle} flex items-center justify-center shadow-md ${textColor} transition-all duration-200 ${opacity} ${className || ''}`}
       variants={variants}
       initial="hidden"
       animate="visible"
@@ -102,5 +102,6 @@ export default Square;
 
 // Set default props
 Square.defaultProps = {
-  disabled: false
+  disabled: false,
+  className: ''
 };
