@@ -9,6 +9,8 @@ jobs:
     steps:
       - name: checkout
         uses: actions/checkout@v4
+        env:
+          AWS_REGION: ${{ secrets.AWS_REGION }}
       - name: test
         run: ./.github/scripts/test.sh
       - name: Configure AWS credentials
