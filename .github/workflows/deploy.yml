@@ -4,6 +4,9 @@ name: Deploy to EC2
 
 jobs:
   deploy:
+    defaults:
+      run:
+        working-directory: ./
     environment: production
     runs-on: ubuntu-latest
     steps:
