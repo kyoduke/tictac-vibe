@@ -32,7 +32,7 @@ jobs:
           COMMAND_ID=${{ steps.execute_command.outputs.command_id }}
           aws ssm list-command-invocations \
             --details \
-            --instance-id ${{ secrets.AC2_INSTANCE_ID }} \
+            --instance-id ${{ secrets.EC2_INSTANCE_ID }} \
             --query "CommandInvocations[].CommandPlugins[].{Status:Status,Output:Output}" \
             --command-id "$COMMAND_ID" \
             --output text
