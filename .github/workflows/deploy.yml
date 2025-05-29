@@ -11,7 +11,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: test
-        run: .github/scripts/test.sh
+        run: ./.github/scripts/test.sh
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v2
         with:
